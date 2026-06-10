@@ -1,26 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #080103;
+  --foreground: #f7d8ea;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+
+  overflow-x: hidden;
+
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* chrome logo */
+
+.chrome-logo {
+  font-family: "Orbitron", sans-serif;
+
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #ffd6f1 20%,
+    #ff8ad8 40%,
+    #c084fc 60%,
+    #ffffff 100%
+  );
+
+  background-size: 200% 200%;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 0 10px rgba(255, 182, 255, 0.5),
+    0 0 30px rgba(255, 105, 180, 0.25),
+    0 0 60px rgba(255, 105, 180, 0.15);
+
+  filter: saturate(140%);
+
+  animation: chromeShift 6s ease-in-out infinite;
+}
+
+@keyframes chromeShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* grain overlay */
+
+.grain {
+  position: fixed;
+  inset: 0;
+
+  background-image:
+    url("https://www.transparenttextures.com/patterns/asfalt-dark.png");
+
+  opacity: 0.18;
+
+  mix-blend-mode: soft-light;
+
+  pointer-events: none;
+
+  z-index: 999;
+}
+
+/* vignette */
+
+.vignette {
+  position: fixed;
+  inset: 0;
+
+  background:
+    radial-gradient(circle, transparent 45%, rgba(0,0,0,0.65) 100%);
+
+  pointer-events: none;
+
+  z-index: 998;
+}
+
+/* sparkle animation */
+
+.sparkle {
+  animation: sparkleFloat 4s ease-in-out infinite;
+}
+
+@keyframes sparkleFloat {
+  0% {
+    transform: translateY(0px);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: translateY(-8px);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(0px);
+    opacity: 0.6;
+  }
+}
+.font-chrome {
+  font-family: var(--font-chrome);
+}
+
+.font-digital {
+  font-family: var(--font-digital);
+}
+
+.font-pixel {
+  font-family: var(--font-pixel);
+}
+
+.font-grunge {
+  font-family: var(--font-grunge);
+}
+/* chrome logo */
+
+.chrome-logo {
+
+  background: linear-gradient(
+    to bottom,
+    #fff6fb 0%,
+    #ffb3ec 35%,
+    #ff7de1 60%,
+    #ffd6f4 100%
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  filter:
+    drop-shadow(0 0 10px rgba(255, 120, 220, 0.75))
+    drop-shadow(0 0 35px rgba(255, 70, 190, 0.45))
+    drop-shadow(0 0 70px rgba(255, 0, 150, 0.25));
+
+  will-change: filter;
+}
+
+/* reveal animation */
+
+@keyframes revealText {
+  0% {
+    opacity: 0;
+    filter: blur(30px);
+    transform: scale(0.9);
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: scale(1);
+  }
+}
+
+.reveal-text {
+  animation: revealText 1.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.reveal-fm {
+  animation: revealText 2.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* grain */
+
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  z-index: 999;
+
+  background-image:
+    url("https://www.transparenttextures.com/patterns/asfalt-dark.png");
+}
+
+/* vignette */
+
+.vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 998;
+
+  background:
+    radial-gradient(circle at center,
+      transparent 45%,
+      rgba(0,0,0,0.55) 100%);
 }

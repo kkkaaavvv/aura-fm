@@ -1,65 +1,227 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import Typewriter from "@/components/Typewriter";
 
 export default function Home() {
+  const avatars = [
+    "/avatars/avatar1.png",
+    "/avatars/avatar2.png",
+  ];
+
+  const [currentAvatar, setCurrentAvatar] = useState(0);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [stage, setStage] = useState(0);
+
+  const introClass =
+    "font-digital text-2xl tracking-[0.25em] text-zinc-300";
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="relative min-h-screen overflow-hidden bg-black text-white">
+
+      {stage === 3 && (
+        <div className="absolute right-8 top-8 text-xs tracking-[0.3em] text-zinc-600">
+          aura.fm
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      )}
+
+      <AnimatePresence mode="wait">
+
+        {stage === 0 && (
+          <motion.div
+            key="hello"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+            className="flex min-h-screen items-center justify-center"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <div className={introClass}>
+              <Typewriter
+                text="Hello..."
+                onComplete={() => setStage(1)}
+              />
+            </div>
+          </motion.div>
+        )}
+
+        {stage === 1 && (
+          <motion.div
+            key="welcome"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+            className="flex min-h-screen items-center justify-center"
           >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+            <div className={introClass}>
+              <Typewriter
+                text="Welcome to Aura.fm..."
+                onComplete={() => setStage(2)}
+              />
+            </div>
+          </motion.div>
+        )}
+
+        {stage === 2 && (
+          <motion.div
+            key="init"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+            className="flex min-h-screen items-center justify-center"
+          >
+            <div className={introClass}>
+              <Typewriter
+                text="Initializing archive..."
+                onComplete={() => setStage(3)}
+              />
+            </div>
+          </motion.div>
+        )}
+
+        {stage === 3 && (
+          <motion.div
+            key="terminal"
+            initial={{
+              opacity: 0,
+              scale: 0.97,
+              y: 15,
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 1.2,
+              ease: "easeOut",
+            }}
+            className="flex min-h-screen items-center justify-center"
+          >
+            <div className="w-[420px]">
+
+              <div className="border border-zinc-800 bg-black p-8 shadow-[0_0_30px_rgba(255,255,255,0.03)]">
+
+                <p className="font-pixel mb-10 text-[10px] uppercase tracking-[0.35em] text-zinc-500">
+                  emotional archive v0.98
+                </p>
+
+                <div className="mb-8">
+                  <p className="font-pixel mb-2 text-[10px] uppercase tracking-[0.25em] text-zinc-400">
+                    &gt; username
+                  </p>
+
+                  <input
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="
+                      w-full
+                      border-b
+                      border-zinc-800
+                      bg-transparent
+                      py-2
+                      text-zinc-200
+                      outline-none
+                    "
+                  />
+                </div>
+
+                <div className="mb-8">
+                  <p className="font-pixel mb-2 text-[10px] uppercase tracking-[0.25em] text-zinc-400">
+                    &gt; password
+                  </p>
+
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="
+                      w-full
+                      border-b
+                      border-zinc-800
+                      bg-transparent
+                      py-2
+                      text-zinc-200
+                      outline-none
+                    "
+                  />
+                </div>
+
+                <div className="mb-10">
+                  <p className="font-pixel mb-4 text-[10px] uppercase tracking-[0.25em] text-zinc-400">
+                    archive identity
+                  </p>
+
+                  <div className="flex items-center justify-between border border-zinc-800 p-4">
+
+                    <button
+                      onClick={() =>
+                        setCurrentAvatar(
+                          currentAvatar === 0
+                            ? avatars.length - 1
+                            : currentAvatar - 1
+                        )
+                      }
+                      className="text-zinc-500 transition hover:text-white"
+                    >
+                      ←
+                    </button>
+
+                    <div className="relative h-[140px] w-[140px] overflow-hidden border border-zinc-800">
+                      <Image
+                        src={avatars[currentAvatar]}
+                        alt="archive identity"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+
+                    <button
+                      onClick={() =>
+                        setCurrentAvatar(
+                          currentAvatar === avatars.length - 1
+                            ? 0
+                            : currentAvatar + 1
+                        )
+                      }
+                      className="text-zinc-500 transition hover:text-white"
+                    >
+                      →
+                    </button>
+
+                  </div>
+                </div>
+
+                <button
+                  className="
+                    font-pixel
+                    border
+                    border-zinc-700
+                    px-5
+                    py-3
+                    text-[10px]
+                    uppercase
+                    tracking-[0.25em]
+                    transition
+                    hover:border-white
+                  "
+                >
+                  enter archive
+                </button>
+
+              </div>
+
+            </div>
+          </motion.div>
+        )}
+
+      </AnimatePresence>
+
+    </main>
   );
 }

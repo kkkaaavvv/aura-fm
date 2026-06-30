@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -59,7 +60,10 @@ export default function RootLayout({
         antialiased
       `}
     >
-      <body>{children}</body>
+     
+  <body>
+  {children}
+  </body>
     </html>
   );
 }

@@ -1,9 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import Typewriter from "@/components/Typewriter";
+import { useEffect, useState } from "react";
+import { useWindow } from "@/components/system/WindowContext";
+import BootFlow from "@/components/system/BootFlow";
+import WindowManager from "@/components/system/WindowManager";
+
+import DesktopBrand from "@/components/system/DesktopBrand";
+import DesktopStatus from "@/components/system/DesktopStatus";
+import DesktopViewport from "@/components/system/DesktopViewport";
+
+import { DesktopProvider } from "@/components/system/DesktopContext";
+import { WindowProvider } from "@/components/system/WindowContext";
+
+type BootState =
+  | "intro"
+  | "welcome"
+  | "initialize"
+  | "login"
+  | "desktop";
 
 export default function Home() {
   const avatars = [
@@ -12,216 +26,105 @@ export default function Home() {
   ];
 
   const [currentAvatar, setCurrentAvatar] = useState(0);
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [stage, setStage] = useState(0);
 
-  const introClass =
-    "font-digital text-2xl tracking-[0.25em] text-zinc-300";
+  const [bootState, setBootState] =
+    useState<BootState>("intro");
+
+  const [checkingSession, setCheckingSession] =
+    useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function checkSpotifySession() {
+      try {
+        const res = await fetch("/api/spotify/me", {
+          cache: "no-store",
+        });
+
+        if (cancelled) return;
+
+        if (res.ok) {
+          const profile = await res.json();
+
+          console.log(
+            "Spotify Connected:",
+            profile.display_name
+          );
+
+          setBootState("desktop");
+        } else {
+          setBootState("intro");
+        }
+      } catch (err) {
+        console.error(err);
+
+        if (!cancelled) {
+          setBootState("intro");
+        }
+      } finally {
+        if (!cancelled) {
+          setCheckingSession(false);
+        }
+      }
+    }
+
+    checkSpotifySession();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (checkingSession) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-black">
+        <div className="font-pixel text-center text-[10px] uppercase tracking-[0.35em] text-zinc-500">
+          <p>Initializing Archive...</p>
+
+          <p className="mt-4 animate-pulse">
+            Checking External Memory...
+          </p>
+        </div>
+      </main>
+    );
+  }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-black text-white">
+    <DesktopProvider>
+      <WindowProvider>
+        <DesktopViewport>
+          <main className="relative min-h-screen overflow-hidden bg-black text-white">
 
-      {stage === 3 && (
-        <div className="absolute right-8 top-8 text-xs tracking-[0.3em] text-zinc-600">
-          aura.fm
-        </div>
-      )}
+            {bootState === "desktop" && (
+              <>
+                <DesktopBrand />
+                <DesktopStatus />
+              </>
+            )}
 
-      <AnimatePresence mode="wait">
+            <BootFlow
+              bootState={bootState}
+              setBootState={setBootState}
+              username={username}
+              setUsername={setUsername}
+              password={password}
+              setPassword={setPassword}
+              avatars={avatars}
+              currentAvatar={currentAvatar}
+              setCurrentAvatar={setCurrentAvatar}
+            />
 
-        {stage === 0 && (
-          <motion.div
-            key="hello"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-            className="flex min-h-screen items-center justify-center"
-          >
-            <div className={introClass}>
-              <Typewriter
-                text="Hello..."
-                onComplete={() => setStage(1)}
-              />
-            </div>
-          </motion.div>
-        )}
+            <WindowManager
+              username={username}
+            />
 
-        {stage === 1 && (
-          <motion.div
-            key="welcome"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-            className="flex min-h-screen items-center justify-center"
-          >
-            <div className={introClass}>
-              <Typewriter
-                text="Welcome to Aura.fm..."
-                onComplete={() => setStage(2)}
-              />
-            </div>
-          </motion.div>
-        )}
-
-        {stage === 2 && (
-          <motion.div
-            key="init"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-            className="flex min-h-screen items-center justify-center"
-          >
-            <div className={introClass}>
-              <Typewriter
-                text="Initializing archive..."
-                onComplete={() => setStage(3)}
-              />
-            </div>
-          </motion.div>
-        )}
-
-        {stage === 3 && (
-          <motion.div
-            key="terminal"
-            initial={{
-              opacity: 0,
-              scale: 0.97,
-              y: 15,
-            }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 1.2,
-              ease: "easeOut",
-            }}
-            className="flex min-h-screen items-center justify-center"
-          >
-            <div className="w-[420px]">
-
-              <div className="border border-zinc-800 bg-black p-8 shadow-[0_0_30px_rgba(255,255,255,0.03)]">
-
-                <p className="font-pixel mb-10 text-[10px] uppercase tracking-[0.35em] text-zinc-500">
-                  emotional archive v0.98
-                </p>
-
-                <div className="mb-8">
-                  <p className="font-pixel mb-2 text-[10px] uppercase tracking-[0.25em] text-zinc-400">
-                    &gt; username
-                  </p>
-
-                  <input
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    className="
-                      w-full
-                      border-b
-                      border-zinc-800
-                      bg-transparent
-                      py-2
-                      text-zinc-200
-                      outline-none
-                    "
-                  />
-                </div>
-
-                <div className="mb-8">
-                  <p className="font-pixel mb-2 text-[10px] uppercase tracking-[0.25em] text-zinc-400">
-                    &gt; password
-                  </p>
-
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="
-                      w-full
-                      border-b
-                      border-zinc-800
-                      bg-transparent
-                      py-2
-                      text-zinc-200
-                      outline-none
-                    "
-                  />
-                </div>
-
-                <div className="mb-10">
-                  <p className="font-pixel mb-4 text-[10px] uppercase tracking-[0.25em] text-zinc-400">
-                    archive identity
-                  </p>
-
-                  <div className="flex items-center justify-between border border-zinc-800 p-4">
-
-                    <button
-                      onClick={() =>
-                        setCurrentAvatar(
-                          currentAvatar === 0
-                            ? avatars.length - 1
-                            : currentAvatar - 1
-                        )
-                      }
-                      className="text-zinc-500 transition hover:text-white"
-                    >
-                      ←
-                    </button>
-
-                    <div className="relative h-[140px] w-[140px] overflow-hidden border border-zinc-800">
-                      <Image
-                        src={avatars[currentAvatar]}
-                        alt="archive identity"
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-
-                    <button
-                      onClick={() =>
-                        setCurrentAvatar(
-                          currentAvatar === avatars.length - 1
-                            ? 0
-                            : currentAvatar + 1
-                        )
-                      }
-                      className="text-zinc-500 transition hover:text-white"
-                    >
-                      →
-                    </button>
-
-                  </div>
-                </div>
-
-                <button
-                  className="
-                    font-pixel
-                    border
-                    border-zinc-700
-                    px-5
-                    py-3
-                    text-[10px]
-                    uppercase
-                    tracking-[0.25em]
-                    transition
-                    hover:border-white
-                  "
-                >
-                  enter archive
-                </button>
-
-              </div>
-
-            </div>
-          </motion.div>
-        )}
-
-      </AnimatePresence>
-
-    </main>
+          </main>
+        </DesktopViewport>
+      </WindowProvider>
+    </DesktopProvider>
   );
 }

@@ -1,36 +1,190 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Aura.fm
 
-## Getting Started
+> **An abandoned psychological operating system that reconstructs identity through music.**
 
-First, run the development server:
+Aura.fm is an immersive desktop experience built with **Next.js**, where users authenticate with Spotify, enter their birth details, and undergo a fictional behavioral analysis.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Rather than displaying conventional listening statistics, Aura.fm transforms Spotify history into a classified archive filled with behavioral vectors, psychological dossiers, aura classifications, and an evolving operating system that slowly becomes influenced by the user.
+
+---
+
+## ✨ Experience
+
+The user journey follows a complete operating system narrative:
+
+```text
+BOOT
+
+↓
+
+LOGIN
+
+↓
+
+DESKTOP
+
+↓
+
+ARCHIVE
+
+↓
+
+SPOTIFY SYNCHRONIZATION
+
+↓
+
+PROFILE
+
+↓
+
+ANALYSIS.EXE
+
+↓
+
+CHROMATIC LEAKAGE
+
+↓
+
+SUBJECT WORKSPACE
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+As the analysis progresses, the monochrome Archive begins to fail, allowing the subject's Aura to leak into the operating system itself.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The result is a fully personalized desktop unique to every user.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+# Features
 
-To learn more about Next.js, take a look at the following resources:
+## Current
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* Spotify OAuth Authentication
+* CRT Inspired Desktop Interface
+* Sequential Spotify Synchronization
+* Cached Dataset Architecture
+* Interactive Window System
+* Analysis Terminal
+* Subject Profile
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## In Development
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* Behavioral Vector Engine
+* Aura Classification System
+* Chromatic Leakage Event
+* Personalized Desktop Environment
+* Interactive Archive Applications
+* Psychological Dossier
+* Dynamic Wallpaper Generation
+* Behavioral Graphs & Visualizations
+* Archive Lore System
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+# Tech Stack
+
+### Frontend
+
+* Next.js (App Router)
+* TypeScript
+* Tailwind CSS
+* Framer Motion
+
+### APIs
+
+* Spotify Web API
+* NextAuth
+
+### Planned
+
+* Procedural Wallpaper Generation
+* Audio Feature Analysis
+* Dynamic Graph Engine
+
+---
+
+# Repository Structure
+
+```text
+src/
+├── app/
+├── components/
+├── lib/
+│   ├── spotify/
+│   └── analysis/
+├── calculations/
+└── docs/
+
+docs/
+├── lore.md
+├── metrics.md
+├── aura-system.md
+├── desktop2.md
+├── classification.md
+└── design-principles.md
+```
+
+---
+
+# Development Philosophy
+
+Aura.fm is not designed as a statistics dashboard.
+
+It is designed as a fictional operating system that gradually reconstructs a person's identity using digital artifacts.
+
+The Spotify dataset provides the evidence.
+
+The Archive tells the story.
+
+---
+
+# Current Development Stage
+
+**Phase 2 — Behavioral Analysis Engine**
+
+The project is currently focused on implementing the core behavioral vector calculations that power every subsequent experience, including:
+
+* Internal Echo
+* Memory Drag
+* Signal Dispersion
+* Signal Horizons
+* Anchor Mass
+* Static Bleed
+* Spectral Fracture
+* Recursion Depth
+* Integrity Index
+* Nocturnal Offset
+* Phase Displacement
+
+These metrics will ultimately determine:
+
+* Aura Color
+* Dominant Signature
+* Psychological Dossier
+* Desktop Personalization
+* Archive Notes
+
+---
+
+# Inspiration
+
+Aura.fm draws inspiration from:
+
+* CRT Operating Systems
+* Windows XP
+* Winamp
+* Blade Runner Interfaces
+* Terminal UI
+* Analog Technology
+* Found Footage Computing
+* Digital Archives
+* Early Internet Aesthetics
+
+---
+
+# License
+
+This project is currently under active development.
+
+© Aura.fm

@@ -4,12 +4,14 @@ export type MetricLevel =
   | "HIGH"
   | "CRITICAL";
 
-export interface MetricResult {
+  export interface MetricResult {
   id: string;
 
   title: string;
 
   score: number;
+
+  confidence: number;
 
   level: MetricLevel;
 

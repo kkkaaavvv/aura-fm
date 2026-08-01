@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 interface ArchiveWindowProps {
   username: string;
@@ -17,6 +18,35 @@ export default function ArchiveWindow({
   onFocus,
   zIndex,
 }: ArchiveWindowProps) {
+  const messages = [
+    `Hello, ${username}.`,
+    "The archive remembers.",
+    "We've been expecting you.",
+    "P.S. Some listening habits are hard to forget.",
+  ];
+
+  const [visibleLines, setVisibleLines] = useState(0);
+
+  useEffect(() => {
+    let index = 0;
+
+    setVisibleLines(0);
+
+    const timer = setInterval(() => {
+      index++;
+
+      setVisibleLines(index);
+
+      if (index >= messages.length) {
+        clearInterval(timer);
+      }
+    }, 900);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [messages.length]);
+
   return (
     <motion.div
       drag
@@ -56,17 +86,13 @@ export default function ArchiveWindow({
             text-zinc-300
           "
         >
-          archive.log
+          ARCHIVE.LOG
         </span>
 
         <div className="flex items-center gap-3 text-zinc-500">
-          <button className="hover:text-white">
-            ─
-          </button>
+          <button className="hover:text-white">─</button>
 
-          <button className="hover:text-white">
-            □
-          </button>
+          <button className="hover:text-white">□</button>
 
           <button
             onClick={onClose}
@@ -78,32 +104,46 @@ export default function ArchiveWindow({
       </div>
 
       <div className="p-6">
-
-        <div className="space-y-5 text-zinc-100">
-
-          <p>
-            Hello,{" "}
-            <span className="text-violet-300 font-medium">
-              {username}
-            </span>.
-          </p>
-
-          <p>
-            The archive remembers.
-          </p>
-
-          <p>
-            We've been expecting you.
-          </p>
-
-          <p className="text-zinc-500">
-            P.S. Some listening habits are hard
-            to forget.
-          </p>
-
+        <div className="min-h-[170px] space-y-5 text-zinc-100">
+          {messages
+            .slice(0, visibleLines)
+            .map((message, index) => (
+              <motion.p
+                key={index}
+                initial={{
+                  opacity: 0,
+                  y: 8,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  duration: 0.35,
+                }}
+                className={
+                  index === 3
+                    ? "text-zinc-500"
+                    : ""
+                }
+              >
+                {message}
+              </motion.p>
+            ))}
         </div>
 
-        <button
+        <motion.button
+          initial={{ opacity: 0 }}
+          animate={{
+            opacity:
+              visibleLines === messages.length
+                ? 1
+                : 0,
+          }}
+          transition={{ duration: 0.4 }}
+          disabled={
+            visibleLines !== messages.length
+          }
           onClick={onContinue}
           className="
             mt-8
@@ -116,13 +156,14 @@ export default function ArchiveWindow({
             tracking-[0.25em]
             transition
             hover:border-white
+            hover:text-white
+            disabled:cursor-not-allowed
+            disabled:opacity-30
           "
         >
           Continue
-        </button>
-
+        </motion.button>
       </div>
-
     </motion.div>
   );
 }

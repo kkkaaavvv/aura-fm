@@ -1,13 +1,17 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import AnalysisCompleteWindow from "@/components/windows/AnalysisCompleteWindow";
+import WarningWindow from "@/components/windows/WarningWindow";
 import { useWindow } from "@/components/system/WindowContext";
-
+import TransitionManager from "@/components/Transitions/TransitionManager";
 import ArchiveWindow from "@/components/windows/ArchiveWindow";
 import RecordWindow from "@/components/windows/RecordWindow";
 import MemoryIndexWindow from "@/components/windows/MemoryIndexWindow";
 import ProfileWindow from "@/components/windows/ProfileWindow";
 import AnalysisWindow from "@/components/windows/AnalysisWindow";
+import Dossier from "@/components/dossier/Dossier";
+import { ArchiveStage } from "@/lib/aura/stages";
 
 interface WindowManagerProps {
   username: string;
@@ -16,7 +20,9 @@ interface WindowManagerProps {
 export default function WindowManager({
   username,
 }: WindowManagerProps) {
+
   const {
+
     archiveOpen,
     setArchiveOpen,
 
@@ -49,10 +55,38 @@ export default function WindowManager({
 
     analysisZ,
     setAnalysisZ,
+
   } = useWindow();
 
-  // Automatically open the first window when the desktop loads
+  const [stage, setStage] = useState(
+    ArchiveStage.INTRO
+  );
+  const [showTransition, setShowTransition] = useState(false);
+
+  // Tracks whether we've already performed the initial
+  // "nothing is open yet, so open the Archive" bootstrap.
+  //
+  // Why this exists:
+  // Previously this effect re-ran any time ALL window flags
+  // were simultaneously false. That's true not only on the very
+  // first mount, but also for a brief moment during the
+  // Archive -> Record handoff (archiveOpen is set false
+  // immediately, while recordOpen is set true 300ms later inside
+  // a setTimeout). That intermediate "all false" render was
+  // indistinguishable from "app just booted," so the effect
+  // fired again and remounted ArchiveWindow mid-transition.
+  //
+  // A ref (not state) is used deliberately: we want this to be a
+  // one-time imperative bootstrap action, not something that
+  // re-triggers on every render or every dependency change.
+  const hasAutoOpened = useRef(false);
+
   useEffect(() => {
+
+    if (hasAutoOpened.current) {
+      return;
+    }
+
     if (
       !archiveOpen &&
       !recordOpen &&
@@ -60,8 +94,15 @@ export default function WindowManager({
       !profileOpen &&
       !analysisOpen
     ) {
+
+      hasAutoOpened.current = true;
+
       setArchiveOpen(true);
+
+      setStage(ArchiveStage.INTRO);
+
     }
+
   }, [
     archiveOpen,
     recordOpen,
@@ -73,91 +114,182 @@ export default function WindowManager({
 
   return (
     <>
-      {archiveOpen && (
+
+      {/* ================= INTRO ================= */}
+
+      {archiveOpen &&
+        stage === ArchiveStage.INTRO && (
+
         <ArchiveWindow
           username={username}
           zIndex={archiveZ}
           onFocus={() => {
+
             setArchiveZ(60);
             setRecordZ(50);
+
           }}
           onClose={() => setArchiveOpen(false)}
           onContinue={() => {
-            setArchiveZ(50);
-            setRecordZ(60);
-            setRecordOpen(true);
+
+            setArchiveOpen(false);
+
+            setStage(
+              ArchiveStage.ANALYSIS
+            );
+
+            setTimeout(() => {
+
+              setRecordOpen(true);
+
+              setRecordZ(60);
+
+            }, 300);
+
           }}
         />
+
       )}
 
-      {recordOpen && (
+      {/* ================= RECORD ================= */}
+
+      {recordOpen &&
+        stage === ArchiveStage.ANALYSIS && (
+
         <RecordWindow
           zIndex={recordZ}
           onFocus={() => {
+
             setRecordZ(60);
-            setArchiveZ(50);
+
           }}
           onClose={() => setRecordOpen(false)}
           onContinue={() => {
+
+            setRecordOpen(false);
+
             setMemoryOpen(true);
 
             setMemoryZ(70);
-            setRecordZ(60);
-            setArchiveZ(50);
+
           }}
         />
+
       )}
 
-      {memoryOpen && (
+      {/* ================= MEMORY ================= */}
+
+      {memoryOpen &&
+        stage === ArchiveStage.ANALYSIS && (
+
         <MemoryIndexWindow
           zIndex={memoryZ}
           onFocus={() => {
+
             setMemoryZ(70);
-            setRecordZ(60);
-            setArchiveZ(50);
+
           }}
           onClose={() => setMemoryOpen(false)}
           onContinue={() => {
+
             setMemoryOpen(false);
+
             setProfileOpen(true);
+
           }}
         />
+
       )}
 
-      {profileOpen && (
+      {/* ================= PROFILE ================= */}
+
+      {profileOpen &&
+        stage === ArchiveStage.ANALYSIS && (
+
         <ProfileWindow
           zIndex={profileZ}
           onFocus={() => {
+
             setProfileZ(80);
-            setMemoryZ(70);
-            setRecordZ(60);
-            setArchiveZ(50);
+
           }}
           onClose={() => setProfileOpen(false)}
           onAnalyze={(birthDate) => {
+
             setBirthDate(birthDate);
 
             setProfileOpen(false);
+
             setAnalysisOpen(true);
+
           }}
         />
+
       )}
 
-      {analysisOpen && (
+      {/* ================= ANALYSIS ================= */}
+
+      {analysisOpen &&
+        stage === ArchiveStage.ANALYSIS && (
+
         <AnalysisWindow
           birthDate={birthDate}
           zIndex={analysisZ}
           onFocus={() => {
+
             setAnalysisZ(90);
+
           }}
           onClose={() => setAnalysisOpen(false)}
           onComplete={() => {
+
             setAnalysisOpen(false);
 
-            console.log("Analysis Complete");
+            setStage(
+              ArchiveStage.COMPLETE
+            );
+
           }}
         />
+
       )}
+
+      {/* ================= COMPLETE ================= */}
+
+{stage === ArchiveStage.COMPLETE && !showTransition && (
+  <AnalysisCompleteWindow
+    onContinue={() => {
+      setStage(ArchiveStage.WARNING);
+    }}
+  />
+)}
+
+{/* ================= WARNING ================= */}
+
+{stage === ArchiveStage.WARNING && !showTransition && (
+  <WarningWindow
+    onContinue={() => {
+      setShowTransition(true);
+    }}
+    onCancel={() => {
+      setStage(ArchiveStage.COMPLETE);
+    }}
+  />
+)}
+{showTransition && (
+  <TransitionManager
+    active
+    onComplete={() => {
+      setStage(ArchiveStage.DOSSIER);
+      setShowTransition(false);
+    }}
+  />
+)}
+{stage === ArchiveStage.DOSSIER && (
+    <Dossier />
+)}
+
     </>
   );
+
 }

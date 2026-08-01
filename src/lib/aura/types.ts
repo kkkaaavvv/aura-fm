@@ -1,74 +1,53 @@
-export type SignalLayer =
-  | "STRUCTURAL ANALYSIS"
-  | "MEMORY ANALYSIS"
-  | "SPECTRAL ANALYSIS";
-
-export interface Signal {
-  id: string;
-
-  label: string;
-
-  layer: SignalLayer;
-
-  value: number;
-
-  confidence: number;
-
-  status: string;
-
-  observation: string;
-
-  interpretation: string;
-}
-
-export interface AuraSignals {
-  staticBleed: Signal;
-
-  integrityIndex: Signal;
-
-  phaseDisplacement: Signal;
-
-  signalDispersion: Signal;
-
-  anchorMass: Signal;
-
-  recursionDepth: Signal;
-
-  loopResidue: Signal;
-
-  backtrace: Signal;
-
-  spectralFracture: Signal;
-
-  nullOffset: Signal;
-
-  nocturnalOffset: Signal;
-
-  surfacePenetration: Signal;
-}
+import { MetricResult } from "@/lib/analysis/types";
 
 export interface AuraTheme {
   id: string;
 
   name: string;
 
-  description: string;
+  code: string;
 
-  auraColor: string;
+  status: string;
 
-  wallpaper: string;
+  frequency: number;
 
   accent: string;
 
-  glitch: number;
+  border: string;
 
-  particles: string;
+  glow: string;
+
+  background: string;
+
+  text: string;
+
+  note: string;
+
+  /**
+   * Path to the curated wallpaper image for this theme, e.g.
+   * "/wallpapers/obsidian-red.png". Populate once real assets
+   * exist — safe to leave as an empty string until then.
+   */
+  wallpaper: string;
+
+  /**
+   * Glitch intensity for the Aura Reveal, roughly 0–1.
+   * Not yet wired into AuraReveal.tsx — reserved for when we
+   * build out the more dramatic reveal.
+   */
+  glitch: number;
 }
 
 export interface AuraResult {
   theme: AuraTheme;
 
-  signals: AuraSignals;
+  /**
+   * The raw metric results this classification was derived from —
+   * the real, deterministic data (scores/confidence/evidence),
+   * not a separate derived shape that could drift out of sync
+   * with the actual vector files.
+   */
+  metrics: MetricResult[];
 
   confidence: number;
 

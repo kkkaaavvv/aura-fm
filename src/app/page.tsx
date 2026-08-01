@@ -55,6 +55,29 @@ export default function Home() {
             profile.display_name
           );
 
+          // IMPORTANT: this branch runs whenever the app boots
+          // with an existing Spotify session already present.
+          // That includes the normal "returning user" case, but
+          // also the case right after the OAuth redirect flow:
+          // the user clicked "ESTABLISH LINK" in RecordWindow,
+          // which does a full window.location.href navigation to
+          // Spotify and back. That's a real browser navigation,
+          // not client-side routing, so this entire page (and
+          // every piece of local React state on it, including
+          // the login-form `username`) is destroyed and
+          // reinitialized from scratch on return.
+          //
+          // Previously, username stayed "" here because it was
+          // only ever set by the login form input. Now we recover
+          // it from the authenticated Spotify profile itself,
+          // which is the one thing that *does* survive the
+          // redirect (it lives server-side in the session/cookie,
+          // not in component state).
+          //
+          // This also means a returning user who never touches
+          // the login form still gets a populated username.
+          setUsername(profile.display_name ?? "");
+
           setBootState("desktop");
         } else {
           setBootState("intro");
@@ -118,9 +141,11 @@ export default function Home() {
               setCurrentAvatar={setCurrentAvatar}
             />
 
-            <WindowManager
+            {bootState === "desktop" && (
+              <WindowManager
               username={username}
-            />
+              />
+            )}
 
           </main>
         </DesktopViewport>

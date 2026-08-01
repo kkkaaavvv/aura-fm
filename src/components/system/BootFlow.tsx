@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import Typewriter from "@/components/ui/Typewriter";
-import { useWindow } from "@/components/system/WindowContext";
 
 type BootState =
   | "intro"
@@ -41,8 +40,6 @@ export default function BootFlow({
   currentAvatar,
   setCurrentAvatar,
 }: BootFlowProps) {
-  const { setArchiveOpen } = useWindow();
-
   const introClass =
     "font-digital text-2xl tracking-[0.25em] text-zinc-100";
 
@@ -173,6 +170,7 @@ export default function BootFlow({
                       src={avatars[currentAvatar]}
                       alt="archive identity"
                       fill
+                      sizes="140px"
                       className="object-cover"
                     />
                   </div>
@@ -200,7 +198,6 @@ export default function BootFlow({
                   }
 
                   setBootState("desktop");
-                  setArchiveOpen(true);
                 }}
                 className="
                   font-pixel

@@ -10,18 +10,22 @@ export const auraThemes: AuraTheme[] = [
 
     frequency: 137.8,
 
-    accent: "#E8E8E8",
+    accent: "#D8D6DE",
 
-    border: "#D0D0D0",
+    border: "#A7A3B0",
 
-    glow: "rgba(232,232,232,.18)",
+    glow: "rgba(216,214,222,.18)",
 
     background: "#0F0F10",
 
-    text: "#F5F5F5",
+    text: "#F5F5F7",
 
     note:
       "The archive detected remarkable emotional restraint.",
+
+    wallpaper: "",
+
+    glitch: 0.1,
   },
 
   {
@@ -33,18 +37,22 @@ export const auraThemes: AuraTheme[] = [
 
     frequency: 124.3,
 
-    accent: "#56D364",
+    accent: "#8FB35B",
 
-    border: "#2F8C46",
+    border: "#5C7A3A",
 
-    glow: "rgba(86,211,100,.20)",
+    glow: "rgba(143,179,91,.20)",
 
-    background: "#0E1210",
+    background: "#0D120A",
 
-    text: "#E8FFE8",
+    text: "#EAF5E4",
 
     note:
       "Emotional recovery patterns successfully reconstructed.",
+
+    wallpaper: "",
+
+    glitch: 0.3,
   },
 
   {
@@ -56,18 +64,22 @@ export const auraThemes: AuraTheme[] = [
 
     frequency: 96.4,
 
-    accent: "#8A6BFF",
+    accent: "#7A4FE0",
 
-    border: "#5841C7",
+    border: "#492153",
 
-    glow: "rgba(138,107,255,.22)",
+    glow: "rgba(122,79,224,.22)",
 
-    background: "#14111B",
+    background: "#140B1C",
 
-    text: "#F1ECFF",
+    text: "#EDE4FF",
 
     note:
       "Subject exhibits unusually high cognitive activity during emotional processing.",
+
+    wallpaper: "",
+
+    glitch: 0.85,
   },
 
   {
@@ -79,18 +91,22 @@ export const auraThemes: AuraTheme[] = [
 
     frequency: 118.2,
 
-    accent: "#4D7AFF",
+    accent: "#4A90C2",
 
-    border: "#3155C4",
+    border: "#287BA7",
 
-    glow: "rgba(77,122,255,.22)",
+    glow: "rgba(74,144,194,.22)",
 
-    background: "#10131A",
+    background: "#0B141A",
 
-    text: "#EDF2FF",
+    text: "#E6F2FF",
 
     note:
       "The archive observed prolonged emotional processing during periods of silence.",
+
+    wallpaper: "",
+
+    glitch: 0.25,
   },
 
   {
@@ -102,18 +118,22 @@ export const auraThemes: AuraTheme[] = [
 
     frequency: 91.7,
 
-    accent: "#E0489B",
+    accent: "#C42D6E",
 
-    border: "#B02F76",
+    border: "#76022E",
 
-    glow: "rgba(224,72,155,.22)",
+    glow: "rgba(196,45,110,.22)",
 
-    background: "#180F16",
+    background: "#170610",
 
-    text: "#FFEAF5",
+    text: "#FFE4F0",
 
     note:
       "Behavioral patterns contain multiple conflicting emotional signatures.",
+
+    wallpaper: "",
+
+    glitch: 0.9,
   },
 
   {
@@ -125,18 +145,22 @@ export const auraThemes: AuraTheme[] = [
 
     frequency: 143.5,
 
-    accent: "#D89B2B",
+    accent: "#D4972E",
 
-    border: "#9F6E18",
+    border: "#8C5E17",
 
-    glow: "rgba(216,155,43,.22)",
+    glow: "rgba(212,151,46,.22)",
 
-    background: "#18140D",
+    background: "#180F08",
 
-    text: "#FFF3DA",
+    text: "#FFF1D9",
 
     note:
       "Elevated motivational cycles detected.",
+
+    wallpaper: "",
+
+    glitch: 0.5,
   },
 
   {
@@ -148,18 +172,22 @@ export const auraThemes: AuraTheme[] = [
 
     frequency: 110.6,
 
-    accent: "#8D939D",
+    accent: "#7B8D95",
 
-    border: "#5E646D",
+    border: "#4E5B61",
 
-    glow: "rgba(141,147,157,.18)",
+    glow: "rgba(123,141,149,.18)",
 
-    background: "#141414",
+    background: "#101314",
 
-    text: "#ECECEC",
+    text: "#E9EDEE",
 
     note:
       "Decision making appears heavily logic weighted.",
+
+    wallpaper: "",
+
+    glitch: 0.2,
   },
 
   {
@@ -171,18 +199,22 @@ export const auraThemes: AuraTheme[] = [
 
     frequency: 83.9,
 
-    accent: "#A33C47",
+    accent: "#A3213F",
 
-    border: "#722631",
+    border: "#5C1526",
 
-    glow: "rgba(163,60,71,.22)",
+    glow: "rgba(163,33,63,.22)",
 
-    background: "#170E10",
+    background: "#150609",
 
-    text: "#FFECEC",
+    text: "#FFE3E9",
 
     note:
       "Emotional intensity exceeds expected archive thresholds.",
+
+    wallpaper: "",
+
+    glitch: 0.75,
   },
 
   {
@@ -194,18 +226,22 @@ export const auraThemes: AuraTheme[] = [
 
     frequency: 128.1,
 
-    accent: "#49C2C7",
+    accent: "#57C2C7",
 
-    border: "#2D8E93",
+    border: "#2E7A7D",
 
-    glow: "rgba(73,194,199,.20)",
+    glow: "rgba(87,194,199,.20)",
 
-    background: "#0F1718",
+    background: "#0A1516",
 
-    text: "#E9FFFF",
+    text: "#E4FDFF",
 
     note:
       "Behavioral adaptation detected across multiple emotional environments.",
+
+    wallpaper: "",
+
+    glitch: 0.45,
   },
 
   {
@@ -217,18 +253,22 @@ export const auraThemes: AuraTheme[] = [
 
     frequency: 139.9,
 
-    accent: "#E07A2F",
+    accent: "#C9702E",
 
-    border: "#A9581D",
+    border: "#8A4A1B",
 
-    glow: "rgba(224,122,47,.20)",
+    glow: "rgba(201,112,46,.20)",
 
-    background: "#18120D",
+    background: "#160E08",
 
-    text: "#FFF1E8",
+    text: "#FFECDA",
 
     note:
       "Subject displays unusually diverse exploratory patterns.",
+
+    wallpaper: "",
+
+    glitch: 0.6,
   },
 
   {
@@ -240,18 +280,22 @@ export const auraThemes: AuraTheme[] = [
 
     frequency: 121.4,
 
-    accent: "#2FAF9D",
+    accent: "#3FAE93",
 
-    border: "#1F7A6D",
+    border: "#276F5C",
 
-    glow: "rgba(47,175,157,.22)",
+    glow: "rgba(63,174,147,.22)",
 
-    background: "#101615",
+    background: "#0B1512",
 
-    text: "#E8FFFC",
+    text: "#E3FFF7",
 
     note:
       "Emotional resonance remains consistently stable.",
+
+    wallpaper: "",
+
+    glitch: 0.15,
   },
 
   {
@@ -263,17 +307,74 @@ export const auraThemes: AuraTheme[] = [
 
     frequency: 66.6,
 
-    accent: "#2C2D33",
+    accent: "#2B2530",
 
-    border: "#44454C",
+    border: "#492153",
 
-    glow: "rgba(255,255,255,.05)",
+    glow: "rgba(43,37,48,.15)",
 
-    background: "#090909",
+    background: "#060506",
 
-    text: "#F4F4F4",
+    text: "#F0EEF2",
 
     note:
       "Classification incomplete. Archive unable to establish a stable emotional signature.",
+
+    wallpaper: "",
+
+    glitch: 0.65,
+  },
+
+  {
+    id: "phosphor-burn",
+    name: "PHOSPHOR BURN",
+    code: "AUR-013",
+
+    status: "Lingering",
+
+    frequency: 58.2,
+
+    accent: "#9FAE86",
+
+    border: "#5F6B4E",
+
+    glow: "rgba(159,174,134,.18)",
+
+    background: "#0C0F0A",
+
+    text: "#EDF0E4",
+
+    note:
+      "Faint traces of past listening remain visible long after the original signal has passed.",
+
+    wallpaper: "",
+
+    glitch: 0.35,
+  },
+  {
+    id: "residual-ash",
+    name: "RESIDUAL ASH",
+    code: "AUR-013",
+
+    status: "Lingering",
+
+    frequency: 102.7,
+
+    accent: "#9C7A97",
+
+    border: "#5C4658",
+
+    glow: "rgba(156,122,151,.20)",
+
+    background: "#120F12",
+
+    text: "#F3ECF1",
+
+    note:
+      "Faint residue continues to surface long after the obvious repetitions have ended.",
+
+    wallpaper: "",
+
+    glitch: 0.35,
   },
 ];
